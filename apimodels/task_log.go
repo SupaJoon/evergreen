@@ -10,7 +10,6 @@ import (
 	"time"
 
 	"github.com/evergreen-ci/evergreen"
-	"github.com/evergreen-ci/gimlet"
 	"github.com/evergreen-ci/timber/fetcher"
 	"github.com/mongodb/grip"
 	"github.com/mongodb/grip/level"
@@ -68,18 +67,16 @@ func GetSeverityMapping(s int) string {
 
 // GetBuildloggerLogs makes request to cedar for a specifc log and returns a ReadCloser
 func GetBuildloggerLogs(ctx context.Context, buildloggerBaseURL, taskId, logType string, tail, execution int, priority bool) (io.ReadCloser, error) {
-	usr := gimlet.GetUser(ctx)
-	if usr == nil {
-		return nil, errors.New("error getting user from context")
-	}
+	taskId = "evergreen_lint_lint_model_commitqueue_f36372d862f896fdcd714b150418c9853f1d08bc_20_03_10_13_41_26"
+	execution = 0
 	opts := fetcher.GetOptions{
-		BaseURL:       fmt.Sprintf("https://%s", buildloggerBaseURL),
-		UserKey:       usr.GetAPIKey(),
-		UserName:      usr.Username(),
+		BaseURL:       fmt.Sprintf("https://%s", "cedar.mongodb.com"),
+		UserKey:       "",
+		UserName:      "arjun.patel",
 		TaskID:        taskId,
 		Execution:     execution,
 		PrintTime:     true,
-		PrintPriority: priority,
+		PrintPriority: true,
 		Tail:          tail,
 	}
 	switch logType {
