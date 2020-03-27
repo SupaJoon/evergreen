@@ -514,7 +514,7 @@ func (r *queryResolver) TaskLogs(ctx context.Context, taskID string) (*RecentTas
 	systemLogs := []apimodels.LogMessage{}
 	agentLogs := []apimodels.LogMessage{}
 	// get logs from cedar
-	if defaultLogger == model.BuildloggerLogSender {
+	if true {
 		// task logs
 		taskLogReader, blErr := apimodels.GetBuildloggerLogs(ctx, evergreen.GetEnvironment().Settings().LoggerConfig.BuildloggerBaseURL, taskID, apimodels.TaskLogPrefix, LogMessageCount, t.Execution, true)
 		if blErr != nil {
