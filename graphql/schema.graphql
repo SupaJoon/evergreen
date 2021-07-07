@@ -149,6 +149,12 @@ type MainlineCommitVersion {
   version: Version
   rolledUpVersions: [Version!]
 }
+
+type Status {
+  name: String!
+  count: Int!
+}
+
 type Version {
   id: String!
   createTime: Time!
@@ -164,6 +170,7 @@ type Version {
   branch: String!
   requester: String!
   activated: Boolean
+  statusCounts: [Status!]
   buildVariants(options: BuildVariantOptions): [GroupedBuildVariant]
 }
 
@@ -520,6 +527,7 @@ type Build {
   status: String!
   predictedMakespan: Duration!
   actualMakespan: Duration!
+  revisionOrderNumber: Int!
 }
 
 type Volume {
@@ -685,6 +693,7 @@ type Task {
   baseTaskMetadata: BaseTaskMetadata
   blocked: Boolean!
   buildId: String!
+  build: Build
   buildVariant: String!
   buildVariantDisplayName: String
   canAbort: Boolean!

@@ -208,6 +208,11 @@ type SpawnVolumeInput struct {
 	Host             *string    `json:"host"`
 }
 
+type Status struct {
+	Name  string `json:"name"`
+	Count int    `json:"count"`
+}
+
 type TaskFiles struct {
 	FileCount    int             `json:"fileCount"`
 	GroupedFiles []*GroupedFiles `json:"groupedFiles"`

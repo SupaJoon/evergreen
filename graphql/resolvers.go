@@ -2772,6 +2772,19 @@ func (r *ticketFieldsResolver) ResolutionName(ctx context.Context, obj *thirdpar
 
 func (r *Resolver) TicketFields() TicketFieldsResolver { return &ticketFieldsResolver{r} }
 
+func (r *taskResolver) StatusCounts(ctx context.Context, obj *restModel.APIVersion) ([]*Status, error) {
+	versionId := obj.Id
+	tasks, _, err := r.sc.FindTasksByVersion(*versionId, data.TaskFilterOptions{})
+	if err != nil {
+		return nil, InternalServerError.Send(ctx, fmt.Sprintf("Error getting tasks for patch `%s`: %s", versionId, err.Error()))
+	}
+	for _, t := range tasks {
+		fmt.Println(t.status)
+	}
+	result := []Status{}
+	return &result, nil
+}
+
 func (r *taskResolver) Annotation(ctx context.Context, obj *restModel.APITask) (*restModel.APITaskAnnotation, error) {
 	annotation, err := annotations.FindOneByTaskIdAndExecution(*obj.Id, obj.Execution)
 	if err != nil {
