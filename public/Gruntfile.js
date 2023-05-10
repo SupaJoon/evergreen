@@ -6,8 +6,8 @@ module.exports = function (grunt) {
     babel: {
       options: {
         sourceMap: true,
-        plugins: ["transform-react-jsx"],
-        presets: ["env", "react"],
+        plugins: ["@babel/plugin-transform-react-jsx"],
+        presets: ["@babel/preset-env", "@babel/preset-react"],
       },
       dist: {
         files: [

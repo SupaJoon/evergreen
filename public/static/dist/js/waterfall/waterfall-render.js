@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-ReactDOM.render(React.createElement(Root, {
+ReactDOM.render( /*#__PURE__*/React.createElement(Root, {
   project: window.project,
   userTz: window.userTz,
   jiraHost: window.jiraHost,

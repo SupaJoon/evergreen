@@ -1,13 +1,18 @@
-'use strict';
+"use strict";
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 var MaxFailedTestDisplay = 5;
 
 // endOfPath strips off all of the begging characters from a file path so that just the file name is left.
@@ -29,7 +34,6 @@ function taskStatusClass(task) {
   if (task !== Object(task)) {
     return '';
   }
-
   if (task.status == 'undispatched') {
     if (!task.activated) {
       return 'inactive';
@@ -37,7 +41,6 @@ function taskStatusClass(task) {
       return 'unstarted';
     }
   }
-
   if (task.status == 'failed') {
     if ('task_end_details' in task) {
       if ('type' in task.task_end_details && task.task_end_details.type == 'system') {
@@ -60,7 +63,6 @@ function labelFromTask(task) {
   if (task !== Object(task)) {
     return '';
   }
-
   if (task.status == 'undispatched') {
     if (task.activated) {
       if (task.task_waiting) {
@@ -75,7 +77,6 @@ function labelFromTask(task) {
       return 'not scheduled';
     }
   }
-
   if (task.status == 'failed' && 'task_end_details' in task) {
     if ('timed_out' in task.task_end_details) {
       if (task.task_end_details.timed_out && task.task_end_details.desc == 'heartbeat') {
@@ -93,7 +94,6 @@ function labelFromTask(task) {
       return 'setup failure';
     }
   }
-
   return task.status;
 }
 
@@ -106,7 +106,6 @@ function stringifyNanoseconds(input, skipDayMax, skipSecMax) {
   var NS_PER_SEC = NS_PER_MS * 1000;
   var NS_PER_MINUTE = NS_PER_SEC * 60;
   var NS_PER_HOUR = NS_PER_MINUTE * 60;
-
   if (input == 0) {
     return "0 seconds";
   } else if (input < NS_PER_MS) {
@@ -135,33 +134,30 @@ function stringifyNanoseconds(input, skipDayMax, skipSecMax) {
 // The main class that binds to the root div. This contains all the distros, builds, and tasks
 function Grid(_ref) {
   var data = _ref.data,
-      project = _ref.project,
-      collapseInfo = _ref.collapseInfo,
-      buildVariantFilter = _ref.buildVariantFilter,
-      taskFilter = _ref.taskFilter;
-
+    project = _ref.project,
+    collapseInfo = _ref.collapseInfo,
+    buildVariantFilter = _ref.buildVariantFilter,
+    taskFilter = _ref.taskFilter;
   if (!data) {
-    return React.createElement(GridTombstone, null);
+    return /*#__PURE__*/React.createElement(GridTombstone, null);
   }
-  return React.createElement(
-    'div',
-    { className: 'waterfall-grid' },
-    data.rows.filter(function (row) {
-      return row.build_variant.display_name.toLowerCase().indexOf(buildVariantFilter.toLowerCase()) != -1;
-    }).map(function (row) {
-      return React.createElement(Variant, {
-        key: row.build_variant.display_name,
-        row: row,
-        project: project,
-        collapseInfo: collapseInfo,
-        versions: data.versions,
-        taskFilter: taskFilter,
-        currentTime: data.current_time
-      });
-    })
-  );
-};
-
+  return /*#__PURE__*/React.createElement("div", {
+    className: "waterfall-grid"
+  }, data.rows.filter(function (row) {
+    return row.build_variant.display_name.toLowerCase().indexOf(buildVariantFilter.toLowerCase()) != -1;
+  }).map(function (row) {
+    return /*#__PURE__*/React.createElement(Variant, {
+      key: row.build_variant.display_name,
+      row: row,
+      project: project,
+      collapseInfo: collapseInfo,
+      versions: data.versions,
+      taskFilter: taskFilter,
+      currentTime: data.current_time
+    });
+  }));
+}
+;
 function filterActiveTasks(tasks, activeStatuses) {
   return _.filter(tasks, function (task) {
     return _.contains(activeStatuses, task.status);
@@ -172,42 +168,31 @@ function filterActiveTasks(tasks, activeStatuses) {
 // of versions.
 function Variant(_ref2) {
   var row = _ref2.row,
-      versions = _ref2.versions,
-      project = _ref2.project,
-      collapseInfo = _ref2.collapseInfo,
-      taskFilter = _ref2.taskFilter,
-      currentTime = _ref2.currentTime;
-
-  return React.createElement(
-    'div',
-    { className: 'row variant-row' },
-    React.createElement(
-      'div',
-      { className: 'col-xs-2 build-variants' },
-      row.build_variant.display_name
-    ),
-    React.createElement(
-      'div',
-      { className: 'col-xs-10' },
-      React.createElement(
-        'div',
-        { className: 'row build-cells' },
-        versions.map(function (version, i) {
-          return React.createElement(
-            'div',
-            { key: version.ids[0], className: 'waterfall-build' },
-            React.createElement(Build, {
-              build: row.builds[version.ids[0]],
-              rolledUp: version.rolled_up,
-              collapseInfo: collapseInfo,
-              taskFilter: taskFilter,
-              currentTime: currentTime
-            })
-          );
-        })
-      )
-    )
-  );
+    versions = _ref2.versions,
+    project = _ref2.project,
+    collapseInfo = _ref2.collapseInfo,
+    taskFilter = _ref2.taskFilter,
+    currentTime = _ref2.currentTime;
+  return /*#__PURE__*/React.createElement("div", {
+    className: "row variant-row"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "col-xs-2 build-variants"
+  }, row.build_variant.display_name), /*#__PURE__*/React.createElement("div", {
+    className: "col-xs-10"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "row build-cells"
+  }, versions.map(function (version, i) {
+    return /*#__PURE__*/React.createElement("div", {
+      key: version.ids[0],
+      className: "waterfall-build"
+    }, /*#__PURE__*/React.createElement(Build, {
+      build: row.builds[version.ids[0]],
+      rolledUp: version.rolled_up,
+      collapseInfo: collapseInfo,
+      taskFilter: taskFilter,
+      currentTime: currentTime
+    }));
+  }))));
 }
 
 // Each Build class is one group of tasks for an version + build variant intersection
@@ -215,157 +200,128 @@ function Variant(_ref2) {
 
 function Build(_ref3) {
   var build = _ref3.build,
-      collapseInfo = _ref3.collapseInfo,
-      rolledUp = _ref3.rolledUp,
-      taskFilter = _ref3.taskFilter,
-      currentTime = _ref3.currentTime;
-
+    collapseInfo = _ref3.collapseInfo,
+    rolledUp = _ref3.rolledUp,
+    taskFilter = _ref3.taskFilter,
+    currentTime = _ref3.currentTime;
   // inactive build
   if (rolledUp) {
-    return React.createElement(InactiveBuild, null);
+    return /*#__PURE__*/React.createElement(InactiveBuild, null);
   }
 
   // no build for this version
   if (!build) {
-    return React.createElement(EmptyBuild, null);
+    return /*#__PURE__*/React.createElement(EmptyBuild, null);
   }
 
   // collapsed active build
   if (collapseInfo.collapsed) {
     activeTasks = filterActiveTasks(build.tasks, collapseInfo.activeTaskStatuses);
     if (activeTasks.length == 0) {
-      return React.createElement(CollapsedBuild, { build: build, activeTaskStatuses: collapseInfo.activeTaskStatuses });
+      return /*#__PURE__*/React.createElement(CollapsedBuild, {
+        build: build,
+        activeTaskStatuses: collapseInfo.activeTaskStatuses
+      });
     }
     // Can be modified to show combinations of tasks by statuses
     var activeTasks = filterActiveTasks(build.tasks, collapseInfo.activeTaskStatuses);
-    return React.createElement(
-      'div',
-      null,
-      React.createElement(CollapsedBuild, { build: build, activeTaskStatuses: collapseInfo.activeTaskStatuses }),
-      React.createElement(ActiveBuild, { tasks: activeTasks, currentTime: currentTime })
-    );
+    return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(CollapsedBuild, {
+      build: build,
+      activeTaskStatuses: collapseInfo.activeTaskStatuses
+    }), /*#__PURE__*/React.createElement(ActiveBuild, {
+      tasks: activeTasks,
+      currentTime: currentTime
+    }));
   }
   // uncollapsed active build
-  return React.createElement(ActiveBuild, { tasks: build.tasks, taskFilter: taskFilter, currentTime: currentTime });
+  return /*#__PURE__*/React.createElement(ActiveBuild, {
+    tasks: build.tasks,
+    taskFilter: taskFilter,
+    currentTime: currentTime
+  });
 }
 
 // At least one task in the version is not inactive, so we display all build tasks with their appropriate colors signifying their status
 function ActiveBuild(_ref4) {
   var tasks = _ref4.tasks,
-      taskFilter = _ref4.taskFilter,
-      currentTime = _ref4.currentTime;
-
+    taskFilter = _ref4.taskFilter,
+    currentTime = _ref4.currentTime;
   if (taskFilter != null) {
     tasks = _.filter(tasks, function (task) {
       return task.display_name.toLowerCase().indexOf(taskFilter.toLowerCase()) != -1;
     });
   }
-
-  return React.createElement(
-    'div',
-    { className: 'active-build' },
-    _.map(tasks, function (task) {
-      return React.createElement(Task, { key: task.id, task: task, currentTime: currentTime });
-    })
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    className: "active-build"
+  }, _.map(tasks, function (task) {
+    return /*#__PURE__*/React.createElement(Task, {
+      key: task.id,
+      task: task,
+      currentTime: currentTime
+    });
+  }));
 }
 
 // All tasks are inactive, so we display the words "inactive build"
 function InactiveBuild() {
-  return React.createElement(
-    'div',
-    { className: 'inactive-build' },
-    ' inactive build '
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    className: "inactive-build"
+  }, " inactive build ");
 }
 // No build associated with a given version and variant, so we render an empty div
 function EmptyBuild() {
-  return React.createElement('div', null);
+  return /*#__PURE__*/React.createElement("div", null);
 }
-
 function TooltipContent(_ref5) {
   var task = _ref5.task,
-      eta = _ref5.eta;
-
+    eta = _ref5.eta;
   var topLineContent = task.display_name + " - " + labelFromTask(task);
   if (task.status == 'success' || task.status == 'failed') {
     var dur = stringifyNanoseconds(task.time_taken);
     topLineContent += ' - ' + dur;
   }
-
   if (task.status != 'failed' || !task.failed_test_names || task.failed_test_names.length == 0) {
     if (task.status == 'started') {
-      return React.createElement(
-        'span',
-        { className: 'waterfall-tooltip' },
-        topLineContent,
-        ' - ',
-        eta
-      );
+      return /*#__PURE__*/React.createElement("span", {
+        className: "waterfall-tooltip"
+      }, topLineContent, " - ", eta);
     }
-    return React.createElement(
-      'span',
-      { className: 'waterfall-tooltip' },
-      topLineContent
-    );
+    return /*#__PURE__*/React.createElement("span", {
+      className: "waterfall-tooltip"
+    }, topLineContent);
   }
-
   if (task.failed_test_names.length > MaxFailedTestDisplay) {
-    return React.createElement(
-      'span',
-      { className: 'waterfall-tooltip' },
-      React.createElement(
-        'span',
-        null,
-        topLineContent
-      ),
-      React.createElement(
-        'div',
-        { className: 'header' },
-        React.createElement('i', { className: 'fa fa-times icon' }),
-        task.failed_test_names.length,
-        ' failed tests'
-      )
-    );
+    return /*#__PURE__*/React.createElement("span", {
+      className: "waterfall-tooltip"
+    }, /*#__PURE__*/React.createElement("span", null, topLineContent), /*#__PURE__*/React.createElement("div", {
+      className: "header"
+    }, /*#__PURE__*/React.createElement("i", {
+      className: "fa fa-times icon"
+    }), task.failed_test_names.length, " failed tests"));
   }
-  return React.createElement(
-    'span',
-    { className: 'waterfall-tooltip' },
-    React.createElement(
-      'span',
-      null,
-      topLineContent
-    ),
-    React.createElement(
-      'div',
-      { className: 'failed-tests' },
-      task.failed_test_names.map(function (failed_test_name) {
-        return React.createElement(
-          'div',
-          null,
-          React.createElement('i', { className: 'fa fa-times icon' }),
-          endOfPath(failed_test_name)
-        );
-      })
-    )
-  );
+  return /*#__PURE__*/React.createElement("span", {
+    className: "waterfall-tooltip"
+  }, /*#__PURE__*/React.createElement("span", null, topLineContent), /*#__PURE__*/React.createElement("div", {
+    className: "failed-tests"
+  }, task.failed_test_names.map(function (failed_test_name) {
+    return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("i", {
+      className: "fa fa-times icon"
+    }), endOfPath(failed_test_name));
+  })));
 }
 
 // CountdownClock is a class that manages decrementing duration every second.
 // It takes as an argument nanosecondsRemaining and begins counting this number
 // down as soon as it is instantiated.
-
-var CountdownClock = function () {
+var CountdownClock = /*#__PURE__*/function () {
   function CountdownClock(nanosecondsRemaining) {
     _classCallCheck(this, CountdownClock);
-
     this.tick = this.tick.bind(this);
     this.countdown = setInterval(this.tick, 1000);
     this.nanosecondsRemaining = nanosecondsRemaining;
   }
-
   _createClass(CountdownClock, [{
-    key: 'tick',
+    key: "tick",
     value: function tick() {
       this.nanosecondsRemaining -= 1 * (1000 * 1000 * 1000);
       if (this.nanosecondsRemaining <= 0) {
@@ -374,52 +330,40 @@ var CountdownClock = function () {
       }
     }
   }, {
-    key: 'getNanosecondsRemaining',
+    key: "getNanosecondsRemaining",
     value: function getNanosecondsRemaining() {
       return this.nanosecondsRemaining;
     }
   }]);
-
   return CountdownClock;
-}();
-
-// ETADisplay is a react component that manages displaying a time being
+}(); // ETADisplay is a react component that manages displaying a time being
 // counted down. It takes as a prop a CountdownClock, which it uses to fetch
 // the time left in the count down.
-
-
-var ETADisplay = function (_React$Component) {
+var ETADisplay = /*#__PURE__*/function (_React$Component) {
   _inherits(ETADisplay, _React$Component);
-
+  var _super = _createSuper(ETADisplay);
   function ETADisplay(props) {
+    var _this;
     _classCallCheck(this, ETADisplay);
-
-    var _this = _possibleConstructorReturn(this, (ETADisplay.__proto__ || Object.getPrototypeOf(ETADisplay)).call(this, props));
-
-    _this.tick = _this.tick.bind(_this);
-    _this.componentWillUnmount = _this.componentWillUnmount.bind(_this);
-
+    _this = _super.call(this, props);
+    _this.tick = _this.tick.bind(_assertThisInitialized(_this));
+    _this.componentWillUnmount = _this.componentWillUnmount.bind(_assertThisInitialized(_this));
     _this.update = setInterval(_this.tick, 1000);
     _this.countdownClock = _this.props.countdownClock;
-
     var nsString = stringifyNanoseconds(_this.countdownClock.getNanosecondsRemaining());
-
     if (_this.countdownClock.getNanosecondsRemaining() <= 0) {
       nsString = 'unknown';
     }
     _this.state = {
       ETAString: nsString
     };
-
     return _this;
   }
-
   _createClass(ETADisplay, [{
-    key: 'tick',
+    key: "tick",
     value: function tick() {
       var nsRemaining = this.countdownClock.getNanosecondsRemaining();
       var nsString = stringifyNanoseconds(nsRemaining);
-
       if (nsRemaining <= 0) {
         nsString = 'unknown';
         clearInterval(this.countdown);
@@ -429,32 +373,21 @@ var ETADisplay = function (_React$Component) {
       });
     }
   }, {
-    key: 'componentWillUnmount',
+    key: "componentWillUnmount",
     value: function componentWillUnmount() {
       clearInterval(this.interval);
     }
   }, {
-    key: 'render',
+    key: "render",
     value: function render() {
-      return React.createElement(
-        'span',
-        null,
-        'ETA: ',
-        this.state.ETAString
-      );
+      return /*#__PURE__*/React.createElement("span", null, "ETA: ", this.state.ETAString);
     }
   }]);
-
   return ETADisplay;
-}(React.Component);
-
-// A Task contains the information for a single task for a build, including the link to its page, and a tooltip
-
-
+}(React.Component); // A Task contains the information for a single task for a build, including the link to its page, and a tooltip
 function Task(_ref6) {
   var task = _ref6.task,
-      currentTime = _ref6.currentTime;
-
+    currentTime = _ref6.currentTime;
   var OverlayTrigger = ReactBootstrap.OverlayTrigger;
   var Popover = ReactBootstrap.Popover;
   var Tooltip = ReactBootstrap.Tooltip;
@@ -468,31 +401,34 @@ function Task(_ref6) {
       currentTime = new Date().getTime() * Math.pow(1000, 2);
       task.start_time = Date.parse(task.start_time) * Math.pow(1000, 2);
     }
-
     var timeRemaining = task.expected_duration - (currentTime - task.start_time);
     var clock = new CountdownClock(timeRemaining);
-    var eta = React.createElement(ETADisplay, { countdownClock: clock });
+    var eta = /*#__PURE__*/React.createElement(ETADisplay, {
+      countdownClock: clock
+    });
   }
-  var tooltip = React.createElement(
-    Tooltip,
-    { id: 'tooltip' },
-    React.createElement(TooltipContent, { task: task, eta: eta })
-  );
-  return React.createElement(
-    OverlayTrigger,
-    { placement: 'top', overlay: tooltip, animation: false },
-    React.createElement('a', { href: "/task/" + task.id, className: "waterfall-box " + taskStatusClass(task) })
-  );
+  var tooltip = /*#__PURE__*/React.createElement(Tooltip, {
+    id: "tooltip"
+  }, /*#__PURE__*/React.createElement(TooltipContent, {
+    task: task,
+    eta: eta
+  }));
+  return /*#__PURE__*/React.createElement(OverlayTrigger, {
+    placement: "top",
+    overlay: tooltip,
+    animation: false
+  }, /*#__PURE__*/React.createElement("a", {
+    href: "/task/" + task.id,
+    className: "waterfall-box " + taskStatusClass(task)
+  }));
 }
 
 // A CollapsedBuild contains a set of PartialProgressBars, which in turn make up a full progress bar
 // We iterate over the 5 different main types of task statuses, each of which have a different color association
 function CollapsedBuild(_ref7) {
   var build = _ref7.build,
-      activeTaskStatuses = _ref7.activeTaskStatuses;
-
+    activeTaskStatuses = _ref7.activeTaskStatuses;
   var taskStats = build.taskStatusCount;
-
   var taskTypes = {
     "success": taskStats.succeeded,
     "dispatched": taskStats.started,
@@ -506,43 +442,39 @@ function CollapsedBuild(_ref7) {
   taskTypes = _.pick(taskTypes, function (count, status) {
     return count > 0 && !_.contains(activeTaskStatuses, status);
   });
-
-  return React.createElement(
-    'div',
-    { className: 'collapsed-build' },
-    _.map(taskTypes, function (count, status) {
-      return React.createElement(TaskSummary, { key: status, status: status, count: count, build: build });
-    })
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    className: "collapsed-build"
+  }, _.map(taskTypes, function (count, status) {
+    return /*#__PURE__*/React.createElement(TaskSummary, {
+      key: status,
+      status: status,
+      count: count,
+      build: build
+    });
+  }));
 }
 
 // A TaskSummary is the class for one rolled up task type
 // A CollapsedBuild is comprised of an  array of contiguous TaskSummaries below individual failing tasks
 function TaskSummary(_ref8) {
   var status = _ref8.status,
-      count = _ref8.count,
-      build = _ref8.build;
-
+    count = _ref8.count,
+    build = _ref8.build;
   var id_link = "/build/" + build.id;
   var OverlayTrigger = ReactBootstrap.OverlayTrigger;
   var Popover = ReactBootstrap.Popover;
   var Tooltip = ReactBootstrap.Tooltip;
-  var tt = React.createElement(
-    Tooltip,
-    { id: 'tooltip' },
-    count,
-    ' ',
-    status
-  );
+  var tt = /*#__PURE__*/React.createElement(Tooltip, {
+    id: "tooltip"
+  }, count, " ", status);
   var classes = "task-summary " + status;
-  return React.createElement(
-    OverlayTrigger,
-    { placement: 'top', overlay: tt, animation: false },
-    React.createElement(
-      'a',
-      { href: id_link, className: classes },
-      count
-    )
-  );
+  return /*#__PURE__*/React.createElement(OverlayTrigger, {
+    placement: "top",
+    overlay: tt,
+    animation: false
+  }, /*#__PURE__*/React.createElement("a", {
+    href: id_link,
+    className: classes
+  }, count));
 }
 //# sourceMappingURL=tasks_grid.js.map
