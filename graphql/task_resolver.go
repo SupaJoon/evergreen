@@ -381,23 +381,6 @@ func (r *taskResolver) FailedTestCount(ctx context.Context, obj *restModel.APITa
 	return stats.FailedCount, nil
 }
 
-// GeneratedByName is the resolver for the generatedByName field.
-func (r *taskResolver) GeneratedByName(ctx context.Context, obj *restModel.APITask) (*string, error) {
-	if obj.GeneratedBy == "" {
-		return nil, nil
-	}
-	generator, err := task.FindOneIdWithFields(obj.GeneratedBy, task.DisplayNameKey)
-	if err != nil {
-		return nil, InternalServerError.Send(ctx, fmt.Sprintf("unable to find generator: %s", err.Error()))
-	}
-	if generator == nil {
-		return nil, nil
-	}
-	name := generator.DisplayName
-
-	return &name, nil
-}
-
 // IsPerfPluginEnabled is the resolver for the isPerfPluginEnabled field.
 func (r *taskResolver) IsPerfPluginEnabled(ctx context.Context, obj *restModel.APITask) (bool, error) {
 	if !evergreen.IsFinishedTaskStatus(utility.FromStringPtr(obj.Status)) {
@@ -642,3 +625,25 @@ func (r *taskResolver) VersionMetadata(ctx context.Context, obj *restModel.APITa
 func (r *Resolver) Task() TaskResolver { return &taskResolver{r} }
 
 type taskResolver struct{ *Resolver }
+
+// !!! WARNING !!!
+// The code below was going to be deleted when updating resolvers. It has been copied here so you have
+// one last chance to move it out of harms way if you want. There are two reasons this happens:
+//   - When renaming or deleting a resolver the old code will be put in here. You can safely delete
+//     it when you're done.
+//   - You have helper methods in this file. Move them out to keep these resolver files clean.
+func (r *taskResolver) GeneratedByName(ctx context.Context, obj *restModel.APITask) (*string, error) {
+	if obj.GeneratedBy == "" {
+		return nil, nil
+	}
+	generator, err := task.FindOneIdWithFields(obj.GeneratedBy, task.DisplayNameKey)
+	if err != nil {
+		return nil, InternalServerError.Send(ctx, fmt.Sprintf("unable to find generator: %s", err.Error()))
+	}
+	if generator == nil {
+		return nil, nil
+	}
+	name := generator.DisplayName
+
+	return &name, nil
+}

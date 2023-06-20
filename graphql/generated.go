@@ -999,7 +999,6 @@ type ComplexityRoot struct {
 		FinishTime              func(childComplexity int) int
 		GenerateTask            func(childComplexity int) int
 		GeneratedBy             func(childComplexity int) int
-		GeneratedByName         func(childComplexity int) int
 		HostId                  func(childComplexity int) int
 		Id                      func(childComplexity int) int
 		IngestTime              func(childComplexity int) int
@@ -1554,8 +1553,6 @@ type TaskResolver interface {
 	ExecutionTasksFull(ctx context.Context, obj *model.APITask) ([]*model.APITask, error)
 
 	FailedTestCount(ctx context.Context, obj *model.APITask) (int, error)
-
-	GeneratedByName(ctx context.Context, obj *model.APITask) (*string, error)
 
 	IsPerfPluginEnabled(ctx context.Context, obj *model.APITask) (bool, error)
 	LatestExecution(ctx context.Context, obj *model.APITask) (int, error)
@@ -6458,13 +6455,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Task.GeneratedBy(childComplexity), true
-
-	case "Task.generatedByName":
-		if e.complexity.Task.GeneratedByName == nil {
-			break
-		}
-
-		return e.complexity.Task.GeneratedByName(childComplexity), true
 
 	case "Task.hostId":
 		if e.complexity.Task.HostId == nil {
@@ -15521,8 +15511,6 @@ func (ec *executionContext) fieldContext_GroupedBuildVariant_tasks(ctx context.C
 				return ec.fieldContext_Task_finishTime(ctx, field)
 			case "generatedBy":
 				return ec.fieldContext_Task_generatedBy(ctx, field)
-			case "generatedByName":
-				return ec.fieldContext_Task_generatedByName(ctx, field)
 			case "generateTask":
 				return ec.fieldContext_Task_generateTask(ctx, field)
 			case "hostId":
@@ -19951,8 +19939,6 @@ func (ec *executionContext) fieldContext_LogkeeperBuild_task(ctx context.Context
 				return ec.fieldContext_Task_finishTime(ctx, field)
 			case "generatedBy":
 				return ec.fieldContext_Task_generatedBy(ctx, field)
-			case "generatedByName":
-				return ec.fieldContext_Task_generatedByName(ctx, field)
 			case "generateTask":
 				return ec.fieldContext_Task_generateTask(ctx, field)
 			case "hostId":
@@ -22421,8 +22407,6 @@ func (ec *executionContext) fieldContext_Mutation_scheduleUndispatchedBaseTasks(
 				return ec.fieldContext_Task_finishTime(ctx, field)
 			case "generatedBy":
 				return ec.fieldContext_Task_generatedBy(ctx, field)
-			case "generatedByName":
-				return ec.fieldContext_Task_generatedByName(ctx, field)
 			case "generateTask":
 				return ec.fieldContext_Task_generateTask(ctx, field)
 			case "hostId":
@@ -24832,8 +24816,6 @@ func (ec *executionContext) fieldContext_Mutation_abortTask(ctx context.Context,
 				return ec.fieldContext_Task_finishTime(ctx, field)
 			case "generatedBy":
 				return ec.fieldContext_Task_generatedBy(ctx, field)
-			case "generatedByName":
-				return ec.fieldContext_Task_generatedByName(ctx, field)
 			case "generateTask":
 				return ec.fieldContext_Task_generateTask(ctx, field)
 			case "hostId":
@@ -25031,8 +25013,6 @@ func (ec *executionContext) fieldContext_Mutation_overrideTaskDependencies(ctx c
 				return ec.fieldContext_Task_finishTime(ctx, field)
 			case "generatedBy":
 				return ec.fieldContext_Task_generatedBy(ctx, field)
-			case "generatedByName":
-				return ec.fieldContext_Task_generatedByName(ctx, field)
 			case "generateTask":
 				return ec.fieldContext_Task_generateTask(ctx, field)
 			case "hostId":
@@ -25230,8 +25210,6 @@ func (ec *executionContext) fieldContext_Mutation_restartTask(ctx context.Contex
 				return ec.fieldContext_Task_finishTime(ctx, field)
 			case "generatedBy":
 				return ec.fieldContext_Task_generatedBy(ctx, field)
-			case "generatedByName":
-				return ec.fieldContext_Task_generatedByName(ctx, field)
 			case "generateTask":
 				return ec.fieldContext_Task_generateTask(ctx, field)
 			case "hostId":
@@ -25429,8 +25407,6 @@ func (ec *executionContext) fieldContext_Mutation_scheduleTasks(ctx context.Cont
 				return ec.fieldContext_Task_finishTime(ctx, field)
 			case "generatedBy":
 				return ec.fieldContext_Task_generatedBy(ctx, field)
-			case "generatedByName":
-				return ec.fieldContext_Task_generatedByName(ctx, field)
 			case "generateTask":
 				return ec.fieldContext_Task_generateTask(ctx, field)
 			case "hostId":
@@ -25628,8 +25604,6 @@ func (ec *executionContext) fieldContext_Mutation_setTaskPriority(ctx context.Co
 				return ec.fieldContext_Task_finishTime(ctx, field)
 			case "generatedBy":
 				return ec.fieldContext_Task_generatedBy(ctx, field)
-			case "generatedByName":
-				return ec.fieldContext_Task_generatedByName(ctx, field)
 			case "generateTask":
 				return ec.fieldContext_Task_generateTask(ctx, field)
 			case "hostId":
@@ -25827,8 +25801,6 @@ func (ec *executionContext) fieldContext_Mutation_unscheduleTask(ctx context.Con
 				return ec.fieldContext_Task_finishTime(ctx, field)
 			case "generatedBy":
 				return ec.fieldContext_Task_generatedBy(ctx, field)
-			case "generatedByName":
-				return ec.fieldContext_Task_generatedByName(ctx, field)
 			case "generateTask":
 				return ec.fieldContext_Task_generateTask(ctx, field)
 			case "hostId":
@@ -30490,8 +30462,6 @@ func (ec *executionContext) fieldContext_Pod_task(ctx context.Context, field gra
 				return ec.fieldContext_Task_finishTime(ctx, field)
 			case "generatedBy":
 				return ec.fieldContext_Task_generatedBy(ctx, field)
-			case "generatedByName":
-				return ec.fieldContext_Task_generatedByName(ctx, field)
 			case "generateTask":
 				return ec.fieldContext_Task_generateTask(ctx, field)
 			case "hostId":
@@ -31023,8 +30993,6 @@ func (ec *executionContext) fieldContext_PodEventLogData_task(ctx context.Contex
 				return ec.fieldContext_Task_finishTime(ctx, field)
 			case "generatedBy":
 				return ec.fieldContext_Task_generatedBy(ctx, field)
-			case "generatedByName":
-				return ec.fieldContext_Task_generatedByName(ctx, field)
 			case "generateTask":
 				return ec.fieldContext_Task_generateTask(ctx, field)
 			case "hostId":
@@ -37932,8 +37900,6 @@ func (ec *executionContext) fieldContext_Query_task(ctx context.Context, field g
 				return ec.fieldContext_Task_finishTime(ctx, field)
 			case "generatedBy":
 				return ec.fieldContext_Task_generatedBy(ctx, field)
-			case "generatedByName":
-				return ec.fieldContext_Task_generatedByName(ctx, field)
 			case "generateTask":
 				return ec.fieldContext_Task_generateTask(ctx, field)
 			case "hostId":
@@ -38131,8 +38097,6 @@ func (ec *executionContext) fieldContext_Query_taskAllExecutions(ctx context.Con
 				return ec.fieldContext_Task_finishTime(ctx, field)
 			case "generatedBy":
 				return ec.fieldContext_Task_generatedBy(ctx, field)
-			case "generatedByName":
-				return ec.fieldContext_Task_generatedByName(ctx, field)
 			case "generateTask":
 				return ec.fieldContext_Task_generateTask(ctx, field)
 			case "hostId":
@@ -44030,8 +43994,6 @@ func (ec *executionContext) fieldContext_Task_baseTask(ctx context.Context, fiel
 				return ec.fieldContext_Task_finishTime(ctx, field)
 			case "generatedBy":
 				return ec.fieldContext_Task_generatedBy(ctx, field)
-			case "generatedByName":
-				return ec.fieldContext_Task_generatedByName(ctx, field)
 			case "generateTask":
 				return ec.fieldContext_Task_generateTask(ctx, field)
 			case "hostId":
@@ -45100,8 +45062,6 @@ func (ec *executionContext) fieldContext_Task_displayTask(ctx context.Context, f
 				return ec.fieldContext_Task_finishTime(ctx, field)
 			case "generatedBy":
 				return ec.fieldContext_Task_generatedBy(ctx, field)
-			case "generatedByName":
-				return ec.fieldContext_Task_generatedByName(ctx, field)
 			case "generateTask":
 				return ec.fieldContext_Task_generateTask(ctx, field)
 			case "hostId":
@@ -45455,8 +45415,6 @@ func (ec *executionContext) fieldContext_Task_executionTasksFull(ctx context.Con
 				return ec.fieldContext_Task_finishTime(ctx, field)
 			case "generatedBy":
 				return ec.fieldContext_Task_generatedBy(ctx, field)
-			case "generatedByName":
-				return ec.fieldContext_Task_generatedByName(ctx, field)
 			case "generateTask":
 				return ec.fieldContext_Task_generateTask(ctx, field)
 			case "hostId":
@@ -45684,47 +45642,6 @@ func (ec *executionContext) fieldContext_Task_generatedBy(ctx context.Context, f
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Task_generatedByName(ctx context.Context, field graphql.CollectedField, obj *model.APITask) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Task_generatedByName(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Task().GeneratedByName(rctx, obj)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*string)
-	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Task_generatedByName(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Task",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type String does not have child fields")
 		},
@@ -52334,8 +52251,6 @@ func (ec *executionContext) fieldContext_UpstreamProject_task(ctx context.Contex
 				return ec.fieldContext_Task_finishTime(ctx, field)
 			case "generatedBy":
 				return ec.fieldContext_Task_generatedBy(ctx, field)
-			case "generatedByName":
-				return ec.fieldContext_Task_generatedByName(ctx, field)
 			case "generateTask":
 				return ec.fieldContext_Task_generateTask(ctx, field)
 			case "hostId":
@@ -55823,8 +55738,6 @@ func (ec *executionContext) fieldContext_VersionTasks_data(ctx context.Context, 
 				return ec.fieldContext_Task_finishTime(ctx, field)
 			case "generatedBy":
 				return ec.fieldContext_Task_generatedBy(ctx, field)
-			case "generatedByName":
-				return ec.fieldContext_Task_generatedByName(ctx, field)
 			case "generateTask":
 				return ec.fieldContext_Task_generateTask(ctx, field)
 			case "hostId":
@@ -70317,23 +70230,6 @@ func (ec *executionContext) _Task(ctx context.Context, sel ast.SelectionSet, obj
 
 			out.Values[i] = ec._Task_generatedBy(ctx, field, obj)
 
-		case "generatedByName":
-			field := field
-
-			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Task_generatedByName(ctx, field, obj)
-				return res
-			}
-
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
-
-			})
 		case "generateTask":
 
 			out.Values[i] = ec._Task_generateTask(ctx, field, obj)
