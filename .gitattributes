@@ -1,4 +1,4 @@
 *.sh text eol=lf
 ./public/static/dist/* binary
 ./public/package-lock.json binary
-./graphql/task_resolver.go linguist-generated=false
+graphql/task_resolver.go linguist-generated=false
