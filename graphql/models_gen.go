@@ -333,6 +333,7 @@ type SpawnVolumeInput struct {
 	Type             string     `json:"type"`
 }
 
+<<<<<<< HEAD
 type Subscriber struct {
 	EmailSubscriber       *string                         `json:"emailSubscriber,omitempty"`
 	GithubCheckSubscriber *model.APIGithubCheckSubscriber `json:"githubCheckSubscriber,omitempty"`
@@ -345,6 +346,13 @@ type Subscriber struct {
 
 // TaskFiles is the return value for the taskFiles query.
 // Some tasks generate files which are represented by this type.
+=======
+type StatusCount struct {
+	Status string `json:"status"`
+	Count  int    `json:"count"`
+}
+
+>>>>>>> 0e69f553f36ed97659c4cafca5a62a94022127b4
 type TaskFiles struct {
 	FileCount    int             `json:"fileCount"`
 	GroupedFiles []*GroupedFiles `json:"groupedFiles"`
