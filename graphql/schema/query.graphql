@@ -3,7 +3,7 @@ type Query {
   # annotations
   bbGetCreatedTickets(taskId: String!): [JiraTicket!]!
   buildBaron(taskId: String!, execution: Int!): BuildBaron!
-
+LOLz
   # config
   awsRegions: [String!]
   clientConfig: ClientConfig
