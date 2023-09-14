@@ -417,7 +417,7 @@ func (r *taskResolver) Files(ctx context.Context, obj *restModel.APITask) (*Task
 	}
 	return &taskFiles, nil
 }
-
+stuff
 // GeneratedByName is the resolver for the generatedByName field.
 func (r *taskResolver) GeneratedByName(ctx context.Context, obj *restModel.APITask) (*string, error) {
 	if obj.GeneratedBy == "" {
